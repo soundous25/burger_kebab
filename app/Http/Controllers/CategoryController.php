@@ -15,7 +15,7 @@ public function index(Request $request)
             $query->where('name', 'like', '%' . $search . '%');
         })
         ->orderBy('order')
-        ->paginate(10);
+        ->paginate(5);
 
     return view('categories.index', compact('categories', 'search'));
 }
@@ -44,6 +44,13 @@ public function index(Request $request)
     {
         return view('categories.edit', compact('category'));
     }
+
+    public function toggle(Category $category)
+{
+    $category->update(['status' => !$category->status]);
+
+    return redirect()->route('categories.index');
+} 
 
     public function update(Request $request, Category $category)
     {

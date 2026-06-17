@@ -52,12 +52,11 @@
         </select>
     </div>
 
-    <button class="btn btn-save">
+    <button class="btn btn-edit">
         Modifier
     </button>
 
-    <a href="{{ route('categories.index') }}"
-       class="btn btn-secondary">
+    <a href="{{ route('categories.index') }}" class="btn btn-secondary">
         Retour
     </a>
 

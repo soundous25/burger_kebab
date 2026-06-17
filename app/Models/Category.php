@@ -10,4 +10,8 @@ class Category extends Model
         'order',
         'status',
     ];
+ public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

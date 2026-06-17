@@ -21,6 +21,8 @@
                 {{ $message }}
             </small>
         @enderror
+
+
     </div>
 
     <div class="mb-3">
@@ -30,6 +32,12 @@
                name="order"
                class="form-control"
                value="{{ old('order') }}">
+
+               @error ('order')
+           <small class="text-danger">
+            {{ $message }}
+            </small>
+        @enderror
     </div>
 
     <div class="mb-3">
