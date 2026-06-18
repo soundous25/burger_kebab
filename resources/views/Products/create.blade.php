@@ -44,7 +44,7 @@
         </select>
     </div>
 
-    <button class="btn btn-save">Enregistrer</button>
+    <button class="btn btn-add">Enregistrer</button>
 
 </form>
 

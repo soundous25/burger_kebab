@@ -49,7 +49,7 @@
         </select>
     </div>
 
-    <button class="btn btn-save">
+    <button class="btn btn-add">
         Enregistrer
     </button>
 

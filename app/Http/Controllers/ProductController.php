@@ -8,12 +8,22 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
-    {
-        $products = Product::paginate(5);
+    public function index(Request $request)
+{
+    $categories = Category::all();
+    $query = Product::query();
 
-        return view('products.index', compact('products'));
+    if ($request->has('search') && $request->search != '') {
+        $query->where('name', 'like', '%' . $request->search . '%');
     }
+
+    if ($request->has('category_id') && $request->category_id != '') {
+        $query->where('category_id', $request->category_id);
+    }
+
+    $products = $query->paginate(5)->withQueryString();
+    return view('products.index', compact('products', 'categories'));
+}
 
     public function create()
     {

@@ -85,59 +85,121 @@
         }
 
         .btn-edit {
-            background: #2563EB;
-            color: #FFFFFF;
-            border: none;
+            background: transparent;
+            color: #4b5563;
+            border: 1px solid #e5e7eb ;
         }
 
         .btn-edit:hover {
-            background: #1D4ED8;
-            color: #FFFFFF;
+            background: #eff6ff;
+            color: #2563eb;
+            border-color: #bfdbfe
         }
 
         .btn-delete {
-           background-color: #DC3545;
-           color: #FFFFFF;
-           border: none;
+           background-color: #fef2f2;
+           color: #9e0f0f;
+           border: 1px solid #fee2e2;
+           padding: 8px;
+           border-radius: 6px;
+           display: inline-flex;
+           align-items: center;
+           justify-content: center;
+           cursor: pointer;
+           transition: all 0.2s ease-in-out;
         }
 
         .btn-delete:hover {
-            background: #DC3545;
-            color: #FFFFFF;
+            background-color: #fee2e2;
+            color: #7f1d1d;
+            border-color: #fca5a5;
         }
 
         .btn-add {
-            background: #2E7D32;
+            background: #03543f;
             color: #FFFFFF;
             border: none;
         }
 
-        .btn-sm {
-            background: #6C757D;
+        .btn-add:hover {
+            background: #03543f;
             color: #FFFFFF;
+        }  
+
+        .btn-sm {
+            background: #f3f4f6;
+            color: #4b5563;
+            border: none;
+        }
+
+        .btn-inactive {
+            background: #f3f4f6;
+            color: #4b5563;
             border: none;
         }
 
         .btn-success {
-            background: #2E7D32;
+            background: #def7ec;
+            color: #03543f;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #4b5563;
             color: #FFFFFF;
             border: none;
         }
 
+        .btn-primary:hover {
+            background: #4b5563;
+            color: #FFFFFF;
+        }
         .page-item.active .page-link {
-            background-color: #2E7D32;
-            border-color: #2E7D32;
+            background-color: #4b5563;
+            border-color: #4b5563;
             color: white;
         }
 
         .page-link {
-            color: #2E7D32;
+            color: #4b5563;
+            background-color: #ffffff;
+            border color: #e5e7eb;
         }
 
         .page-link:hover {
-            color: #2E7D32;
+            color: #4b5563;
+            background-color: #f3f4f6;
+            border color: #d1d5db;
         }
-    </style>
+    .search-wrapper {
+        position:relative;
+        display: flex;
+        align-items: center;
+    }
+    .serarch-wrapper .form-control {
+        padding-right: 40px;
+    }  
+
+.btn-search {
+    position: absolute;
+    right: 12px;
+    background: transparent;
+    color: #9ca3af;
+    border: none;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.btn-search:hover {
+    background-color: transparent;
+    color: #4b5563;
+}
+
+</style>
 </head>
 
 <body>
