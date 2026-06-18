@@ -2,26 +2,59 @@
 
 ## Objectif
 
-Ce projet a été réalisé dans le cadre de la Mission 001 du projet Burger Kebab.
+Le projet Burger Kebab est une application web développée avec le framework Laravel permettant la gestion d’un menu de restaurant.
 
-L'objectif est de développer un module permettant à un administrateur de gérer les catégories de produits du restaurant.
+Il permet d’administrer les catégories et les produits afin d’organiser efficacement l’offre du restaurant.
+
+Ce projet a pour objectifs de :
+
+- maîtriser le framework Laravel et le modèle MVC ;
+- structurer une application web professionnelle ;
+- gérer des relations entre entités (Catégories / Produits) ;
+- appliquer des règles métier réelles ;
+- produire un code propre, maintenable et évolutif ;
+- documenter et expliquer les choix techniques.
 
 ## Fonctionnalités
 
+Gestion des catégories
+
 - Afficher la liste des catégories
-- Créer une nouvelle catégorie
-- Modifier une catégorie existante
-- Activer ou désactiver une catégorie
+- Créer une catégorie
+- Modifier une catégorie
+- Activer / désactiver une catégorie
 - Supprimer une catégorie
-- Rechercher une catégorie
-- Pagination des résultats
+- Recherche et pagination (bonus)
+
+ Gestion des produits
+
+- Afficher la liste des produits
+- Créer un produit lié à une catégorie
+- Modifier un produit
+- Activer / désactiver un produit
+- Supprimer un produit
+- Filtrer par catégorie (bonus)
+- Recherche et pagination (bonus)
 
 ## Règles métier
 
-- Le nom d'une catégorie est obligatoire.
-- Deux catégories ne peuvent pas avoir le même nom.
-- Une catégorie inactive n'est plus visible dans le menu destiné aux clients.
-- L'ordre d'affichage permet d'organiser les catégories dans le menu.
+ Catégories
+
+- Le nom est obligatoire
+- Deux catégories ne peuvent pas avoir le même nom
+- Une catégorie inactive n’est pas visible dans le menu client
+- L’ordre d’affichage organise le menu
+- Une catégorie peut être supprimée uniquement si cela ne casse pas l’intégrité des données
+
+  Produits
+
+- Le nom est obligatoire
+- Le prix est obligatoire et doit être > 0
+- Le prix est exprimé en CHF avec 2 décimales
+- Un produit doit appartenir à une catégorie existante
+- Un produit inactif n’est pas visible dans le menu client
+- Un produit ne peut pas être créé sans catégorie
+- Les doublons dans une même catégorie doivent être justifiés ou empêchés
 
 ## Prérequis
 
@@ -30,6 +63,7 @@ L'objectif est de développer un module permettant à un administrateur de gére
 - Laravel 12
 - MySQL
 - Git
+- Node.js
 
 ## Installation
 
@@ -66,31 +100,44 @@ text http://127.0.0.1:8000
 ## Structure du projet
 
 ### Modèle
-- Category.php : représente la table des catégories et permet les interactions avec la base de données.
+- Category.php :* représente la table des catégories et permet les interactions avec la base de données.
+- Product.php : représente la table des produits et gère les relations avec les catégories.
 
 ### Contrôleur
 - CategoryController.php : gère les opérations CRUD (Créer, Lire, Modifier, Supprimer).
+- ProductController.php : gère les opérations CRUD des produits et leur liaison avec les catégories
 
 ### Base de données
-- Migration categories : création de la table categories.
-- Seeder CategorySeeder : insertion des données de test.
+-  Migration categories : création de la table categories.
+- Migration products : création de la table products avec clé étrangère category_id.
+- Seeder CategorySeeder : insertion des catégories de test.
+- Seeder ProductSeeder : insertion des produits de test.
 
 ### Vues
+ Catégories
+
 - index.blade.php : affichage de la liste des catégories.
-- create.blade.php : formulaire d'ajout d'une catégorie.
-- edit.blade.php : formulaire de modification d'une catégorie.
-- app.blade.php : template principal de l'application.
+- create.blade.php : formulaire d’ajout d’une catégorie.
+- edit.blade.php : formulaire de modification d’une catégorie.
+
+Produits
+
+- index.blade.php : affichage de la liste des produits.
+- create.blade.php : formulaire d’ajout d’un produit.
+- edit.blade.php : formulaire de modification d’un produit.
+
+### Layout
+app.blade.php : template principal de l’application.
 
 ### Routes
-- web.php : définition des routes du module catégories.
+- web.php : * définition des routes des modules catégories et produits (CRUD + activation/désactivation).
 
 ## Choix techniques
 
-- Utilisation de l'architecture MVC de Laravel.
-- Utilisation d'Eloquent ORM pour la communication avec la base de données.
-- Utilisation des migrations pour gérer la structure de la base de données.
-- Utilisation des Seeders pour générer des données de test.
-- Utilisation de Blade pour les interfaces utilisateur.
-- Utilisation des validations Laravel pour sécuriser les formulaires.
-- Utilisation de Git et GitHub pour le versionnement du projet.
-- Ajout de la recherche et de la pagination pour améliorer l'expérience utilisateur.
+- Laravel : framework principal (architecture MVC)
+- Blade : moteur de templates simple et intégré
+- MySQL : base de données relationnelle
+- Eloquent ORM : gestion des relations entre modèles
+- Migrations & Seeders : structuration et initialisation de la base de données
+- Validation Laravel : sécurisation des formulaires
+- Git / GitHub : gestion de version et suivi du projet
