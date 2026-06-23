@@ -16,7 +16,7 @@
 
     <div class="mb-3">
         <label>Description</label>
-        <textarea name="description" class="form-control"></textarea>
+        <textarea name="description" class="form-control" required></textarea>
     </div>
 
     <div class="mb-3">
@@ -35,6 +35,8 @@
             @endforeach
         </select>
     </div>
+
+
 
     <div class="mb-3">
         <label>Statut</label>

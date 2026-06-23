@@ -86,7 +86,7 @@
                     </svg>
                 </a>
 
-                <form action="{{ route('products.destroy', $product) }}" method="POST" style="display:inline">
+                <form action="{{ route('products.destroy', $product) }}" method="POST" style="display:inline" onsubmit="return confirm ('confirmer la suppression');" >
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-delete d-inline-flex align-items-center justify-content-center" title="Supprimer">
