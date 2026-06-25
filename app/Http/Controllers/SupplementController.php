@@ -19,16 +19,17 @@ class SupplementController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $data = $request->validate([
-            'name'  => 'required|string|max:255',
-            'price' => 'required|numeric|min:0', // 0 autorisé : un supplément peut être gratuit
-        ]);
+{
+    $data = $request->validate([
+        'name'   => 'required|string|max:255',
+        'price'  => 'required|numeric|min:0',
+        'status' => 'required|in:0,1',
+    ]);
 
-        Supplement::create($data);
+    Supplement::create($data);
 
-        return redirect()->route('supplements.index')->with('success', 'Supplément créé avec succès');
-    }
+    return redirect()->route('supplements.index')->with('success', 'Supplément créé avec succès');
+}
 
     public function edit(Supplement $supplement)
     {
@@ -36,16 +37,17 @@ class SupplementController extends Controller
     }
 
     public function update(Request $request, Supplement $supplement)
-    {
-        $data = $request->validate([
-            'name'  => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-        ]);
+{
+    $data = $request->validate([
+        'name'   => 'required|string|max:255',
+        'price'  => 'required|numeric|min:0',
+        'status' => 'required|in:0,1',
+    ]);
 
-        $supplement->update($data);
+    $supplement->update($data);
 
-        return redirect()->route('supplements.index')->with('success', 'Supplément mis à jour avec succès');
-    }
+    return redirect()->route('supplements.index')->with('success', 'Supplément mis à jour avec succès');
+}
 
     public function destroy(Supplement $supplement)
     {

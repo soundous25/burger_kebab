@@ -19,41 +19,45 @@ class OptionController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $data = $request->validate([
-            'name'         => 'required|string|max:255',
-            'is_required'  => 'nullable|boolean',
-            'min_select'   => 'required|integer|min:0',
-            'max_select'   => 'required|integer|min:1|gte:min_select',
-        ]);
+{
+    $data = $request->validate([
+        'name'         => 'required|string|max:255',
+        'is_required'  => 'nullable|boolean',
+        'min_select'   => 'required|integer|min:0',
+        'max_select'   => 'required|integer|min:1|gte:min_select',
+        'status'       => 'required|in:0,1',
+    ]);
 
-        $data['is_required'] = $request->boolean('is_required');
+    $data['is_required'] = $request->boolean('is_required');
 
-        Option::create($data);
+    Option::create($data);
 
-        return redirect()->route('options.index')->with('success', 'Option créée avec succès');
-    }
+    return redirect()->route('options.index')->with('success', 'Option créée avec succès');
+}
 
     public function edit(Option $option)
-    {
-        return view('options.edit', compact('option'));
-    }
+{
+    $option->load('values.supplements');
+    return view('options.edit', compact('option'));
+}
+
 
     public function update(Request $request, Option $option)
-    {
-        $data = $request->validate([
-            'name'         => 'required|string|max:255',
-            'is_required'  => 'nullable|boolean',
-            'min_select'   => 'required|integer|min:0',
-            'max_select'   => 'required|integer|min:1|gte:min_select',
-        ]);
+{
+    $data = $request->validate([
+        'name'         => 'required|string|max:255',
+        'is_required'  => 'nullable|boolean',
+        'min_select'   => 'required|integer|min:0',
+        'max_select'   => 'required|integer|min:1|gte:min_select',
+        'status'       => 'required|in:0,1',
+    ]);
 
-        $data['is_required'] = $request->boolean('is_required');
+    $data['is_required'] = $request->boolean('is_required');
 
-        $option->update($data);
+    $option->update($data);
 
-        return redirect()->route('options.index')->with('success', 'Option mise à jour avec succès');
-    }
+    return redirect()->route('options.index')->with('success', 'Option mise à jour avec succès');
+}
 
     public function destroy(Option $option)
     {

@@ -25,7 +25,7 @@ class OptionValueController extends Controller
 
         // Associer des suppléments (Many-To-Many) si sélectionnés
         if ($request->has('supplements')) {
-            $value->supplements()->sync($request->input('supplements'));
+           $value->supplements()->sync($request->input('supplements', []));
         }
 
         return redirect()->route('options.index')->with('success', 'Valeur ajoutée avec succès');

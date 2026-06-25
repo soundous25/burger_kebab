@@ -199,6 +199,86 @@
     color: #4b5563;
 }
 
+.section-title{
+    font-size:16px;
+    font-weight:600;
+    color:#111827;
+    margin-bottom:15px;
+}
+
+.form-section{
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:20px;
+    background:#fff;
+}
+
+.image-preview{
+    border:2px dashed #d1d5db;
+    border-radius:10px;
+    padding:20px;
+    text-align:center;
+    min-height:180px;
+    background:#f9fafb;
+}
+
+.image-preview img{
+    max-width:100%;
+    max-height:150px;
+    border-radius:8px;
+}
+
+.actions-bar{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:20px;
+}
+
+.table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table thead {
+    background: #f9fafb;
+}
+
+.table thead th {
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.table tbody tr:hover {
+    background: #f9fafb;
+}
+
+.form-section {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #111827;
+}
+
+.actions-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+  
+
+
 </style>
 </head>
 
@@ -221,6 +301,18 @@
         <i class="fa-solid fa-burger"></i>
         Produits
     </a>
+
+    <a href="{{ route('options.index') }}"
+      class="nav-link-custom {{ request()->routeIs('options.*') ? 'active' : '' }}">
+       <i class="fa-solid fa-sliders"></i>
+       Options
+   </a>
+
+    <a href="{{ route('supplements.index') }}"
+       class="nav-link-custom {{ request()->routeIs('supplements.*') ? 'active' : '' }}">
+       <i class="fa-solid fa-plus"></i>
+       Suppléments
+  </a>
 
 </div>
 

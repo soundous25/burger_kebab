@@ -4,32 +4,79 @@
 
 @section('content')
 
-<h2 class="page-title">Modifier la valeur « {{ $value->name }} »</h2>
+<h2 class="page-title mb-4">
+    Modifier la valeur « {{ $value->name }} »
+    <small class="text-muted fs-6">(option : {{ $option->name }})</small>
+</h2>
 
 <form action="{{ route('option_values.update', $value) }}" method="POST">
     @csrf
     @method('PUT')
 
-    <div class="mb-3">
-        <label class="form-label">Nom de la valeur</label>
-        <input type="text" name="name" class="form-control" value="{{ $value->name }}" required>
+    <div class="form-section">
+
+        <div class="section-title">
+            Informations générales
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Nom de la valeur</label>
+
+            <input type="text"
+                   name="name"
+                   class="form-control"
+                   value="{{ old('name', $value->name) }}"
+                   required>
+
+            @error('name')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
     </div>
 
-    <div class="mb-3">
-        <label class="form-label">Suppléments associés</label>
-        @foreach($supplements as $supplement)
+    <div class="form-section">
+
+        <div class="section-title">
+            Suppléments associés
+        </div>
+
+        @forelse($supplements as $supplement)
             <div class="form-check">
-                <input type="checkbox" name="supplements[]" value="{{ $supplement->id }}" class="form-check-input" id="supp{{ $supplement->id }}"
-                    {{ $value->supplements->contains($supplement->id) ? 'checked' : '' }}>
+                <input type="checkbox"
+                       name="supplements[]"
+                       value="{{ $supplement->id }}"
+                       class="form-check-input"
+                       id="supp{{ $supplement->id }}"
+                       {{ $value->supplements->contains($supplement->id) ? 'checked' : '' }}>
+
                 <label class="form-check-label" for="supp{{ $supplement->id }}">
-                    {{ $supplement->name }} (+{{ number_format($supplement->price, 2) }} CHF)
+                    {{ $supplement->name }}
+                    @if($supplement->price > 0)
+                        <span class="badge bg-light text-dark border">+{{ number_format($supplement->price, 2) }} CHF</span>
+                    @else
+                        <span class="badge bg-info text-dark">Gratuit</span>
+                    @endif
                 </label>
             </div>
-        @endforeach
+        @empty
+            <p class="text-muted mb-0">Aucun supplément disponible.</p>
+        @endforelse
+
     </div>
 
-    <button class="btn btn-save">Mettre à jour</button>
-    <a href="{{ route('options.index') }}" class="btn btn-secondary">Retour</a>
+    <div class="actions-bar">
+
+        <a href="{{ route('options.index') }}" class="btn btn-secondary">
+            Retour
+        </a>
+
+        <button type="submit" class="btn btn-save">
+            Mettre à jour
+        </button>
+
+    </div>
+
 </form>
 
 @endsection

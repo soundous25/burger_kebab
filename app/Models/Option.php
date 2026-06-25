@@ -21,6 +21,6 @@ class Option extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_option');
+        return $this->belongsToMany(Product::class, 'option_product');
     }
 }

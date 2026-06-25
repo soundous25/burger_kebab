@@ -13,21 +13,11 @@ return new class extends Migration
 {
     Schema::create('options', function (Blueprint $table) {
         $table->id();
-
         $table->string('name');
-
-        $table->boolean('is_required')
-              ->default(false);
-
-        $table->integer('min_selection')
-              ->default(0);
-
-        $table->integer('max_selection')
-              ->default(1);
-
-        $table->boolean('is_active')
-              ->default(true);
-
+        $table->boolean('is_required')->default(false);
+        $table->integer('min_select')->default(0);
+        $table->integer('max_select')->default(1);
+        $table->boolean('status')->default(true);
         $table->timestamps();
     });
 }

@@ -20,8 +20,7 @@ return new class extends Migration
 
         $table->string('name');
 
-        $table->boolean('statut')
-              ->default(true);
+        $table->boolean('status')->default(true);
 
         $table->timestamps();
     });

@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
 use Illuminate\Database\Seeder;
+use App\Models\Category;
 
 class CategorySeeder extends Seeder
 {
@@ -12,31 +12,31 @@ class CategorySeeder extends Seeder
         Category::create([
             'name' => 'Burgers',
             'order' => 1,
-            'status' => true
+            'status' => true,
         ]);
 
         Category::create([
             'name' => 'Kebabs',
             'order' => 2,
-            'status' => true
+            'status' => true,
         ]);
 
         Category::create([
             'name' => 'Menus',
             'order' => 3,
-            'status' => true
+            'status' => true,
         ]);
 
         Category::create([
             'name' => 'Boissons',
             'order' => 4,
-            'status' => true
+            'status' => true,
         ]);
 
         Category::create([
             'name' => 'Desserts',
             'order' => 5,
-            'status' => true
+            'status' => true,
         ]);
     }
 }

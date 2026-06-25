@@ -13,21 +13,24 @@ class ProductSeeder extends Seeder
             'name' => 'Burger Classic',
             'price' => 25,
             'description' => 'Burger avec viande, salade et sauce',
-            'category_id' => 1
+            'category_id' => 1,
+            'status' => true,
         ]);
 
         Product::create([
             'name' => 'Kebab Chicken',
             'price' => 30,
             'description' => 'Kebab au poulet grillé',
-            'category_id' => 1
+            'category_id' => 2,
+            'status' => true,
         ]);
 
         Product::create([
             'name' => 'Burger Cheese',
             'price' => 28,
             'description' => 'Burger avec fromage fondant',
-            'category_id' => 1
+            'category_id' => 1,
+            'status' => true,
         ]);
     }
 }

@@ -46,9 +46,17 @@ class ProductController extends Controller
             'options.*' => 'exists:options,id',
         ]);
 
-        $imagePath = null;
+        $data = $request->except([
+             'image',
+             'options'
+        ]);
+
+           /*
+            Gestion image
+           */
+        $image = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
+            $image = $request->file('image')->store('products', 'public');
         }
 
         $product = Product::create([
@@ -57,7 +65,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'status' => $request->status ?? 1,
             'category_id' => $request->category_id,
-            'image_path' => $imagePath,
+            'image' => $image,
         ]);
 
         // Relation Many-To-Many : on attache les options sélectionnées
@@ -65,12 +73,6 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')
             ->with('success', 'Produit créé avec succès');
-    }
-
-    public function show(Product $product)
-    {
-        $product->load('category', 'options.values.supplements');
-        return view('products.show', compact('product'));
     }
 
     public function edit(Product $product)
@@ -93,13 +95,13 @@ class ProductController extends Controller
             'options.*' => 'exists:options,id',
         ]);
 
-        $imagePath = $product->image_path;
+        $image = $product->image;
         if ($request->hasFile('image')) {
             // On supprime l'ancienne image avant de stocker la nouvelle
-            if ($imagePath) {
-                Storage::disk('public')->delete($imagePath);
+            if ($image) {
+                Storage::disk('public')->delete($image);
             }
-            $imagePath = $request->file('image')->store('products', 'public');
+            $image = $request->file('image')->store('products', 'public');
         }
 
         $product->update([
@@ -108,7 +110,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'status' => $request->status ?? 1,
             'category_id' => $request->category_id,
-            'image_path' => $imagePath,
+            'image' => $image,
         ]);
 
         $product->options()->sync($request->input('options', []));
@@ -119,8 +121,8 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        if ($product->image_path) {
-            Storage::disk('public')->delete($product->image_path);
+        if ($product->image) {
+            Storage::disk('public')->delete($product->image);
         }
 
         $product->delete(); // détache automatiquement le pivot product_option (cascade)
