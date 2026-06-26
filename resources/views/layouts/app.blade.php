@@ -276,7 +276,20 @@
     justify-content: space-between;
     margin-top: 25px;
 }
-  
+
+.sidebar{
+    width:200px;
+    height:100vh;
+    position:fixed;
+    left:0;
+    top:0;
+    background:#111827;
+    color:white;
+    padding:20px;
+
+    display:flex;
+    flex-direction:column;
+}
 
 
 </style>
@@ -289,6 +302,13 @@
     <div class="brand">
         🍔 BURGER KEBAB
     </div>
+    
+    <a href="{{ route('dashboard') }}"
+        class="nav-link-custom {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+        <i class="fa-solid fa-house"></i>
+       Tableau de bord
+    </a>
+     
 
     <a href="{{ route('categories.index') }}"
        class="nav-link-custom {{ request()->routeIs('categories.*') ? 'active' : '' }}">
@@ -314,13 +334,26 @@
        Suppléments
   </a>
 
+   <div class="mt-auto">
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="nav-link-custom border-0 bg-transparent w-100 text-start">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Déconnexion
+            </button>
+        </form>
+    </div>
+
 </div>
 
 <div class="content">
 
-    <div class="topbar">
-        @yield('module_title', 'Dashboard')
-    </div>
+<div class="topbar d-flex justify-content-between align-items-center">
+
+    
+
+</div>
+
 
     @if(session('success'))
         <div class="alert alert-success">
