@@ -1,40 +1,63 @@
-# Burger Kebab — Module Gestion des Catégories
+# Burger Kebab
 
 ## Objectif
 
-Le projet Burger Kebab est une application web développée avec le framework Laravel permettant la gestion d’un menu de restaurant.
+Le projet Burger Kebab est une application web développée avec le framework Laravel.
 
-Il permet d’administrer les catégories et les produits afin d’organiser efficacement l’offre du restaurant.
+Il permet d'administrer dynamiquement le contenu d'un menu de restaurant : catégories, produits, images, options de personnalisation (ex. choix de sauce, choix de cuisson) et suppléments tarifaires (ex. bacon, fromage supplémentaire), en respectant les bonnes pratiques Laravel (architecture MVC, migrations, validations, relations Eloquent).
 
 Ce projet a pour objectifs de :
 
 - maîtriser le framework Laravel et le modèle MVC ;
 - structurer une application web professionnelle ;
-- gérer des relations entre entités (Catégories / Produits) ;
+- gérer des relations entre entités ;
 - appliquer des règles métier réelles ;
 - produire un code propre, maintenable et évolutif ;
 - documenter et expliquer les choix techniques.
 
 ## Fonctionnalités
 
+Authentification
+
+- Inscription et connexion d'un administrateur
+- Déconnexion
+- Accès au panneau d'administration protégé par middleware auth
+
+Tableau de bord
+
+- Page d'accueil de l'administration après connexion
+
 Gestion des catégories
 
-- Afficher la liste des catégories
-- Créer une catégorie
-- Modifier une catégorie
-- Activer / désactiver une catégorie
-- Supprimer une catégorie
-- Recherche et pagination (bonus)
+- Lister, créer, modifier, activer/désactiver et supprimer une catégorie
+- Validation de l'unicité du nom
+- Recherche et pagination 
 
  Gestion des produits
 
-- Afficher la liste des produits
-- Créer un produit lié à une catégorie
-- Modifier un produit
-- Activer / désactiver un produit
-- Supprimer un produit
-- Filtrer par catégorie (bonus)
-- Recherche et pagination (bonus)
+- Lister (avec recherche, filtre par catégorie et pagination), créer, modifier, activer/désactiver et supprimer un produit
+- Upload, remplacement et suppression d'image produit (formats acceptés : JPG, JPEG, PNG, WEBP)
+- Affichage d'une image par défaut en l'absence d'image
+- Rattachement obligatoire à une catégorie existante
+
+  Gestion des options
+
+- Créer, modifier, activer/désactiver et supprimer une option
+- Définir si une option est obligatoire ou facultative
+- Définir un nombre minimum et maximum de sélections
+- Association d'une option à plusieurs produits (relation Many-To-Many)  
+
+  Gestion des Valeurs d'options
+
+- Ajouter, modifier, activer/désactiver et supprimer une valeur d'option
+- Chaque valeur appartient à une option existante
+- Association d'une valeur d'option à un ou plusieurs suppléments (relation Many-To-Many)
+
+   Gestion des Suppléments
+
+- Créer, modifier, activer/désactiver et supprimer un supplément
+- Définir un prix (un supplément peut être gratuit)
+- Réutilisable sur plusieurs valeurs d'options   
 
 ## Règles métier
 
@@ -56,6 +79,10 @@ Gestion des catégories
 - Un produit ne peut pas être créé sans catégorie
 - Les doublons dans une même catégorie doivent être justifiés ou empêchés
 
+- Suppression bloquée pour toute option ou supplément déjà utilisé, afin de préserver l'intégrité des données (l'administrateur doit désactiver plutôt que supprimer)
+- Validation stricte des données (prix > 0, nom obligatoire, formats d'image autorisés, cohérence min/max des sélections)
+
+
 ## Prérequis
 
 - PHP 8.2 ou supérieur
@@ -64,6 +91,7 @@ Gestion des catégories
 - MySQL
 - Git
 - Node.js
+- Un environnement local type XAMPP
 
 ## Installation
 
@@ -82,11 +110,19 @@ bash composer install
 
 ### 4. Configurer la base de données
 
-Modifier les paramètres de connexion dans le fichier .env.
+Modifier les paramètres de connexion dans le fichier .env :
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=burger_kebab
+DB_USERNAME=root
+DB_PASSWORD=
 
 Puis exécuter :
 
 - bash php artisan migrate 
+- php artisan storage:link
 - php artisan db:seed 
 
 ### 5. Lancer l'application
@@ -95,49 +131,79 @@ bash php artisan serve
 
 L'application sera accessible à l'adresse :
 
-text http://127.0.0.1:8000 
+ http://127.0.0.1:8000 
+
+ http://localhost:8000
 
 ## Structure du projet
 
-### Modèle
-- Category.php :* représente la table des catégories et permet les interactions avec la base de données.
-- Product.php : représente la table des produits et gère les relations avec les catégories.
+app/
+ ├── Models/
+ │    ├── Category.php
+ │    ├── Product.php
+ │    ├── Option.php
+ │    ├── OptionValue.php
+ │    ├── Supplement.php
+ │    └── User.php
+ └── Http/Controllers/
+      ├── AuthController.php
+      ├── DashboardController.php
+      ├── CategoryController.php
+      ├── ProductController.php
+      ├── OptionController.php
+      ├── OptionValueController.php
+      └── SupplementController.php
 
-### Contrôleur
-- CategoryController.php : gère les opérations CRUD (Créer, Lire, Modifier, Supprimer).
-- ProductController.php : gère les opérations CRUD des produits et leur liaison avec les catégories
+database/
+ ├── migrations/      → création des tables et des tables pivot
+ └── seeders/
+      ├── CategorySeeder.php
+      ├── ProductSeeder.php
+      ├── DemoOptionsSeeder.php
+      └── DatabaseSeeder.php
 
-### Base de données
--  Migration categories : création de la table categories.
-- Migration products : création de la table products avec clé étrangère category_id.
-- Seeder CategorySeeder : insertion des catégories de test.
-- Seeder ProductSeeder : insertion des produits de test.
+resources/views/
+ ├── auth/             → login, register
+ ├── layouts/
+ ├── categories/
+ ├── Products/
+ ├── options/
+ ├── option_values/
+ └── supplements/
 
-### Vues
- Catégories
-
-- index.blade.php : affichage de la liste des catégories.
-- create.blade.php : formulaire d’ajout d’une catégorie.
-- edit.blade.php : formulaire de modification d’une catégorie.
-
-Produits
-
-- index.blade.php : affichage de la liste des produits.
-- create.blade.php : formulaire d’ajout d’un produit.
-- edit.blade.php : formulaire de modification d’un produit.
-
-### Layout
-app.blade.php : template principal de l’application.
-
-### Routes
-- web.php : * définition des routes des modules catégories et produits (CRUD + activation/désactivation).
+routes/
+ └── web.php
 
 ## Choix techniques
 
-- Laravel : framework principal (architecture MVC)
-- Blade : moteur de templates simple et intégré
-- MySQL : base de données relationnelle
+- Laravel : Architecture MVC claire, ORM Eloquent,       migrations versionnées, validation intégrée
+- Blade : Moteur de templates natif Laravel, intégration  simple avec les contrôleurs
+- Bootstrap :Mise en place rapide d'une interface d'administration claire et responsive
+- MySQL : base de données relationnelle adapté à la gestion de relations One-To-Many et Many-To-Many
 - Eloquent ORM : gestion des relations entre modèles
 - Migrations & Seeders : structuration et initialisation de la base de données
 - Validation Laravel : sécurisation des formulaires
 - Git / GitHub : gestion de version et suivi du projet
+- Disque public Laravel : Permet un accès direct aux fichiers via storage:link, sans configuration supplémentaire
+- belongsToMany(), sync() : Permet de gérer proprement les relations Many-To-Many via les tables pivot
+- Laravel natif (sessions) : Protection des routes d'administration via le middleware auth
+
+## Relations mises en place
+
+### Relations One-To-Many
+- Une Catégorie possède plusieurs Produits (Category hasMany Product)
+- Une Option possède plusieurs Valeurs d'options (Option hasMany OptionValue)
+
+### Relations Many-To-Many (avec tables pivot)
+- Un Produit peut avoir plusieurs Options, et une Option peut être utilisée par plusieurs Produits
+→ table pivot option_product (product_id, option_id)
+- Une Valeur d'option peut avoir plusieurs Suppléments, et un Supplément peut être associé à plusieurs Valeurs d'options
+→ table pivot option_value_supplement (option_value_id, supplement_id)
+
+Category
+   │ (1-N)
+   ▼
+Products ◄──── (N-N) ────► Options
+                              │ (1-N)
+                              ▼
+                        OptionValues ◄──── (N-N) ────► Supplements
