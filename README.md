@@ -19,13 +19,17 @@ Ce projet a pour objectifs de :
 
 Authentification
 
-- Inscription et connexion d'un administrateur
-- Déconnexion
-- Accès au panneau d'administration protégé par middleware auth
+- Création d'une interface de connexion moderne.
+- Création d'une interface d'inscription moderne.
+- Mise en place de l'authentification des administrateurs.
+- Ajout de la déconnexion sécurisée.
 
 Tableau de bord
 
-- Page d'accueil de l'administration après connexion
+- Ajout d'un tableau de bord d'administration moderne.
+- Affichage des statistiques des catégories, produits, options et suppléments.
+- Ajout d'une section **Dernières modifications** affichant automatiquement les éléments récemment créés ou modifiés.
+- Ajout de raccourcis vers les principales fonctionnalités.
 
 Gestion des catégories
 
@@ -35,7 +39,7 @@ Gestion des catégories
 
  Gestion des produits
 
-- Lister (avec recherche, filtre par catégorie et pagination), créer, modifier, activer/désactiver et supprimer un produit
+- Lister (avec recherche, filtre par catégorie et pagination), créer, modifier, voir, activer/désactiver et supprimer un produit
 - Upload, remplacement et suppression d'image produit (formats acceptés : JPG, JPEG, PNG, WEBP)
 - Affichage d'une image par défaut en l'absence d'image
 - Rattachement obligatoire à une catégorie existante
