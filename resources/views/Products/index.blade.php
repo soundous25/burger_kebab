@@ -51,11 +51,13 @@
 <table class="table table-bordered">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Image</th>
             <th>Nom</th>
             <th>Catégorie</th>
             <th>Description</th>
             <th>Prix</th>
+            <th>date de création</th>
             <th>Statut</th>
             <th>Actions</th>
         </tr>
@@ -64,17 +66,19 @@
     <tbody>
         @forelse($products as $product)
         <tr>
+             <td>{{ $product->id }}</td>
             <td>
                @if($product->image)
                  <img src="{{ asset('storage/' . $product->image) }}" width="50" class="rounded">
               @else
                  <img src="{{ asset('images/no-image.png') }}" width="50" class="rounded">
              @endif
-           </td>
+            </td>
             <td>{{ $product->name }}</td>
             <td>{{ $product->category->name ?? 'Sans catégorie' }}</td>
             <td>{{ $product->description }}</td>
             <td>{{ number_format($product->price, 2) }} CHF</td>
+            <td>{{ $product->created_at->format('d/m/Y') }}</td>
 
             <td>
                 <form action="{{ route('products.toggle', $product) }}" method="POST" class="d-inline">
@@ -88,6 +92,18 @@
 
             <td>
 
+
+        <a href="{{ route('products.show', $product) }}"
+                class="btn btn-view d-inline-flex align-items-center justify-content-center"
+                     title="Voir">
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-eye" viewBox="0 0 16 16">
+               <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.12 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8"/>
+              <path d="M8 5.5A2.5 2.5 0 1 0 8 10.5 2.5 2.5 0 0 0 8 5.5M6.5 8A1.5 1.5 0 1 1 9.5 8 1.5 1.5 0 0 1 6.5 8"/>
+           </svg>
+
+        </a>
 
                 <a href="{{ route('products.edit', $product) }}" class="btn btn-edit d-inline-flex align-items-center justify-content-center" title="Modifier">
                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

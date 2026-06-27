@@ -33,9 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('options', OptionController::class);
     Route::resource('supplements', SupplementController::class);
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard');
 
     Route::patch('categories/{category}/toggle', [CategoryController::class, 'toggle'])
         ->name('categories.toggle');
@@ -68,9 +67,4 @@ Route::middleware('auth')->group(function () {
         ->name('supplements.toggle');
 });
 
-    Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware('auth')
-    ->name('dashboard');
+   

@@ -27,7 +27,7 @@ class AuthController extends Controller
 
             $request->session()->regenerate();
 
-            return redirect()->route('categories.index');
+            return redirect()->route('dashboard');
         }
 
         return back()
@@ -45,23 +45,25 @@ class AuthController extends Controller
 
     // Créer un compte
     public function register(Request $request)
-    {
-        $data = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed',
-        ]);
+{
+    $data = $request->validate([
+        'name' => 'required|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|min:8|confirmed',
+    ]);
 
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+    $user = User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => Hash::make($data['password']),
+    ]);
 
-        Auth::login($user);
+    Auth::login($user);
 
-        return redirect()->route('categories.index');
-    }
+    $request->session()->regenerate();
+
+    return redirect()->route('dashboard');
+}
 
     // Déconnexion
     public function logout(Request $request)
@@ -75,4 +77,3 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 }
-return redirect()->route('dashboard');

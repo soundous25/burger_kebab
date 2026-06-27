@@ -71,14 +71,8 @@
                     </svg>
                   </a>
 
-                    <form action="{{ route('categories.destroy',$category) }}"
-                          method="POST"
-                          class="d-inline">
-
-                        @csrf
-                        @method('DELETE')
-
-                        <form action="{{ route('categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Es-tu sûr de vouloir supprimer cette catégorie ?');" class="d-inline">
+        
+<form action="{{ route('categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Es-tu sûr de vouloir supprimer cette catégorie ?');" class="d-inline">
     @csrf
     @method('DELETE')
     
@@ -89,7 +83,6 @@
     </button>
 </form>
 
-                    </form>
 
                 </td>
             </tr>

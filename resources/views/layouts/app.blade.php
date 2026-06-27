@@ -93,7 +93,19 @@
         .btn-edit:hover {
             background: #eff6ff;
             color: #2563eb;
-            border-color: #bfdbfe
+            border-color: #bfdbfe;
+        }
+
+       .btn-view {
+            background: #eff6ff;
+            color: #2563eb;
+            border: 1px solid #bfdbfe ;
+        }
+
+        .btn-view:hover {
+            background: #dbeafe;
+            color: #1d4ed8;
+            border-color: #93c5fd;
         }
 
         .btn-delete {
